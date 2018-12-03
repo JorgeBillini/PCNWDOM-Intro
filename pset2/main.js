@@ -69,3 +69,54 @@ const playlist = {
     }
   ]
 };
+const objectToHTML =(song) =>{
+    return `<div class='row mb-2'>
+    <div class='col-1'>
+      <img src="${song.image}" class="rounded" style='width: 50px; height: 50px;'>
+    </div>
+    <div class='col-11'>
+      <p class='mb-0 mt-1 song-name'>${song.name}</p>
+      <p class='my-0 song-artists'>${song.artists}</p>
+    </div>
+  </div>`;
+}
+const searchForm = document.querySelector('.search-js')
+searchForm.addEventListener('keydown',function(e){
+  if(e.keyCode === 13){
+    const filteredObj = songsFilter(playlist,searchForm.value);
+    searchForm.value = ""
+    render(filteredObj);
+
+  }
+})
+console.dir(searchForm);
+const render = (playlist) =>{
+  const playlistName = document.querySelector('h1');
+  playlistName.innerText = playlist.name;
+  const disk = document.querySelector('.lead');
+  disk.innerText = playlist.description;
+  const song_list = document.querySelector('.song-list');
+  let combinedHTML = ''
+  for (let i= 0 ; i< playlist
+    .songs.length; i++){
+    combinedHTML += objectToHTML(playlist.songs[i]);
+  }
+  song_list.innerHTML = combinedHTML;
+}
+render(playlist)
+
+const songsFilter = (obj,searchStr) =>{
+  let newObj = {
+    name : playlist.name,
+    description: obj.description,
+    songs : [],
+  };
+  for (let i = 0; i < obj.songs.length ; i++){
+    if (obj.songs[i].name.includes(searchStr)){
+      newObj.songs.push(obj.songs[i]);
+
+    }
+    
+  }
+  return newObj;
+}
