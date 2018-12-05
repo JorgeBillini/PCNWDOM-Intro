@@ -112,9 +112,10 @@ const songsFilter = (obj,searchStr) =>{
     songs : [],
   };
   for (let i = 0; i < obj.songs.length ; i++){
-    if (obj.songs[i].name.includes(searchStr)){
+    let searchStrVal = searchStr.toUpperCase();
+    let songName = obj.songs[i].name.toUpperCase();
+    if (songName.includes(searchStrVal)){
       newObj.songs.push(obj.songs[i]);
-
     }
     
   }
